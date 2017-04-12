@@ -1,0 +1,10 @@
+# Downloaded dependencies
+node_modules/
+
+# Generated files
+public/
+target/
+
+# Intellij
+.idea/
+*.iml
