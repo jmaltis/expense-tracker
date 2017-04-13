@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {Router, Route, IndexRoute, browserHistory} from "react-router";
-import Home from "./components/Home";
+import ExpensesContainer from "./containers/ExpensesContainer";
 import LoginContainer from "./containers/LoginContainer";
 import RegisterContainer from "./containers/RegisterContainer";
 import App from "./components/App";
@@ -14,7 +14,7 @@ import "../css/main.css";
 ReactDOM.render(
     <Router history={browserHistory}>
         <Route component={App}>
-            <Route path={HOME} component={Home}/>
+            <Route path={HOME} component={ExpensesContainer}/>
             <Route path={LOGIN} component={LoginContainer}/>
             <Route path={REGISTER} component={RegisterContainer}/>
         </Route>
