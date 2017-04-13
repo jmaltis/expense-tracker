@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExpensesContainer should be rendered properly 1`] = `
+<div>
+  <div
+    className="expensesTitle"
+  >
+    <h3>
+      My expenses
+    </h3>
+    <button
+      className="btn btn-primary"
+      disabled={false}
+      onClick={[Function]}
+      type="button"
+    >
+      Add expense
+    </button>
+  </div>
+  <ul
+    className="list-group"
+  >
+    <li
+      className="list-group-item"
+    >
+      <div
+        className="expense"
+      >
+        <span
+          className="datetime"
+        >
+          2017-01-01T12:23:34
+        </span>
+        <span
+          className="amount"
+        >
+          100
+          $
+        </span>
+        <span
+          className="description"
+        >
+          random description of expense
+        </span>
+      </div>
+    </li>
+  </ul>
+</div>
+`;
