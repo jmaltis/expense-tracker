@@ -1,23 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {Router, Route, IndexRoute, browserHistory} from "react-router";
-import ExpensesContainer from "./containers/ExpensesContainer";
-import LoginContainer from "./containers/LoginContainer";
-import RegisterContainer from "./containers/RegisterContainer";
-import App from "./components/App";
-import {HOME, LOGIN, REGISTER} from "./utils/Constants";
+import {Router, browserHistory} from "react-router";
+import {Routes} from "./utils/Routes";
 
 // Import main css file
 import "../css/main.css";
 
 // Define all the routes
 ReactDOM.render(
-    <Router history={browserHistory}>
-        <Route component={App}>
-            <Route path={HOME} component={ExpensesContainer}/>
-            <Route path={LOGIN} component={LoginContainer}/>
-            <Route path={REGISTER} component={RegisterContainer}/>
-        </Route>
-    </Router>,
+    <Router history={browserHistory} routes={Routes} />,
     document.getElementById('app')
 );
