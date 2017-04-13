@@ -1,10 +1,29 @@
-.accountForm {
-    width: 20em;
+#main {
+    width: 40em;
     margin-left: auto;
     margin-right: auto;
+}
+
+#header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 3em 0;
+}
+
+#header button {
+    margin: 0 0.5em;
+}
+
+.accountForm {
     display: flex;
     flex-direction: column;
     align-items: center;
     border: 1px solid lightgray;
     padding: 1em;
+}
+
+/* Reset */
+h1 {
+    margin: 0;
 }
