@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import AccountForm from "../components/AccountForm";
+import AccountForm from "../components/form/AccountForm";
 
 export default class extends Component {
     login = (values) => {
