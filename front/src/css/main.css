@@ -1,0 +1,10 @@
+.accountForm {
+    width: 20em;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid lightgray;
+    padding: 1em;
+}
