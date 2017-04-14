@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import {Modal, Button, FormGroup, FormControl, InputGroup} from "react-bootstrap";
 import u from "updeep";
+import {expensesAPI} from "../../api/APIs";
+import {isNumber, toISOString} from "../../utils/Utility";
 
 export default class extends Component {
     constructor() {
@@ -21,7 +23,22 @@ export default class extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state.expense);
+        if (this.state.type == "Add") {
+            this.addExpense();
+        } else {
+            // TODO
+        }
+    };
+
+    addExpense = () => {
+        const newExpense = u({dateTime: toISOString(this.state.expense.dateTime)}, this.state.expense);
+        expensesAPI.create(newExpense)
+            .then(() => {
+                this.close();
+            })
+            .catch(err => {
+                this.displayError(err.message);
+            })
     };
 
     render() {
@@ -35,13 +52,14 @@ export default class extends Component {
                         <FormGroup controlId="datetime">
                             <FormControl
                                 type="text"
-                                name="datetime"
+                                name="dateTime"
                                 value={this.state.expense && this.state.expense.datetime}
-                                placeholder="Date and time"
+                                placeholder="Date and time (format : MM/dd/YYYY hh:mm:ss)"
                                 onChange={this.handleChange}
                             />
                         </FormGroup>
-                        <FormGroup controlId="amount">
+                        <FormGroup controlId="amount"
+                                   validationState={this.validateAmount()}>
                             <InputGroup>
                                 <InputGroup.Addon>$</InputGroup.Addon>
                                 <FormControl
@@ -66,12 +84,26 @@ export default class extends Component {
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
+                    {this.state.submitError && <div className="error">{this.state.submitError}</div> }
                     <Button bsStyle="primary" onClick={this.onSubmit}>{this.state.type}</Button>
                     <Button onClick={this.close}>Close</Button>
                 </Modal.Footer>
             </Modal>
         )
     }
+
+    validateAmount = () => {
+        const amount = this.state.expense && this.state.expense.amount;
+        if (amount && !isNumber(amount)) {
+            return 'error';
+        }
+    };
+
+    displayError = (error) => {
+        this.setState({
+            submitError: error
+        });
+    };
 
     close = () => {
         this.setState({open: false});
