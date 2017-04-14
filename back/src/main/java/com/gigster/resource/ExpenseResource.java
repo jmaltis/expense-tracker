@@ -28,41 +28,41 @@ import com.gigster.service.ValidationService;
 public class ExpenseResource {
 
     private final ValidationService validationService;
-    private final ExpenseService service;
+    private final ExpenseService expenseService;
 
     @Autowired
-    public ExpenseResource(ValidationService validationService, ExpenseService service) {
+    public ExpenseResource(ValidationService validationService, ExpenseService expenseService) {
         this.validationService = validationService;
-        this.service = service;
+        this.expenseService = expenseService;
     }
 
     @RequestMapping(method = GET)
     public ResponseEntity getAll() {
-        return new ResponseEntity<>(service.findAll(), OK);
+        return new ResponseEntity<>(expenseService.findAll(), OK);
     }
 
     @RequestMapping(value = ID, method = GET)
     public ResponseEntity getById(@PathVariable String id) {
-        return new ResponseEntity<>(service.find(id), OK);
+        return new ResponseEntity<>(expenseService.find(id), OK);
     }
 
     @RequestMapping(method = POST)
     public ResponseEntity create(@Valid @RequestBody Expense entity, BindingResult bindingResult) throws RestException {
         validationService.handleBindingResult(bindingResult);
-        return new ResponseEntity<>(service.insert(entity), CREATED);
+        return new ResponseEntity<>(expenseService.insert(entity), CREATED);
     }
 
     @RequestMapping(value = ID, method = PATCH)
     public ResponseEntity patch(@PathVariable String id, @Valid @RequestBody Expense entity,
                     BindingResult bindingResult) throws RestException {
         validationService.handleBindingResult(bindingResult);
-            entity.setId(id);
-        return new ResponseEntity<>(service.update(entity), OK);
+        entity.setId(id);
+        return new ResponseEntity<>(expenseService.update(entity), OK);
     }
 
     @RequestMapping(value = ID, method = DELETE)
     public ResponseEntity delete(@PathVariable String id) {
-        service.delete(id);
+        expenseService.delete(id);
         return new ResponseEntity<>(NO_CONTENT);
     }
 
