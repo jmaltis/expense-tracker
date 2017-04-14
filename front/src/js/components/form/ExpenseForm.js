@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {Modal, Button, FormGroup, FormControl, InputGroup} from "react-bootstrap";
 import u from "updeep";
 import {expensesAPI} from "../../api/APIs";
-import {isNumber, toISOString} from "../../utils/Utility";
+import {isNumber, toISOString, toReadableString} from "../../utils/Utility";
 
 export default class extends Component {
     constructor() {
@@ -26,20 +26,29 @@ export default class extends Component {
         if (this.state.type == "Add") {
             this.addExpense();
         } else {
-            // TODO
+            this.editExpense();
         }
     };
 
     addExpense = () => {
-        const newExpense = u({dateTime: toISOString(this.state.expense.dateTime)}, this.state.expense);
-        expensesAPI.create(newExpense)
-            .then(created => {
-                this.close();
-                this.props.afterSave(this.state.type, created);
-            })
-            .catch(err => {
-                this.displayError(err.message);
-            })
+        expensesAPI.create(this.currentExpense())
+            .then(created => this.handleSuccessSaving(created))
+            .catch(err => this.displayError(err.message))
+    };
+
+    editExpense = () => {
+        expensesAPI.update(this.state.expense.id, this.currentExpense())
+            .then(updated => this.handleSuccessSaving(updated))
+            .catch(err => this.displayError(err.message))
+    };
+
+    handleSuccessSaving = (saved) => {
+        this.close();
+        this.props.afterSave(this.state.type, saved);
+    };
+
+    currentExpense = () => {
+        return u({dateTime: toISOString(this.state.expense.dateTime)}, this.state.expense);
     };
 
     render() {
@@ -54,7 +63,7 @@ export default class extends Component {
                             <FormControl
                                 type="text"
                                 name="dateTime"
-                                value={this.state.expense && this.state.expense.datetime}
+                                value={this.state.expense && this.state.expense.dateTime}
                                 placeholder="Date and time (format : MM/dd/YYYY hh:mm:ss)"
                                 onChange={this.handleChange}
                             />

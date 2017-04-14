@@ -26,6 +26,12 @@ export default class extends Component {
         this.updateState(addedExpense);
     };
 
+    editExpenseInState = (editedExpense) => {
+        this.setState(u({
+            expenses: this.state.expenses.map(expense => expense.id === editedExpense.id ? editedExpense : expense)
+        }, this.state));
+    };
+
     updateState = (newContent) => {
         this.setState(u({
                 expenses: [].concat(this.state.expenses, [newContent])
@@ -52,6 +58,7 @@ export default class extends Component {
         return (
             <ExpensesList expenses={this.state.expenses}
                           afterAdd={this.addExpenseToState}
+                          afterEdit={this.editExpenseInState}
                           deleteExpense={this.deleteExpense}/>
         )
     }

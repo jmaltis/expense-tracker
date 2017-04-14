@@ -16,7 +16,8 @@ export default class extends Component {
                     {this.props.expenses.map(expense =>
                         <ListGroupItem key={expense.id}>
                             <Expense expense={expense}
-                                     onDelete={this.onDelete}/>
+                                     onEdit={this.edit}
+                                     onDelete={this.delete}/>
                         </ListGroupItem>)}
                 </ListGroup>
             </div>
@@ -28,10 +29,18 @@ export default class extends Component {
     };
 
     afterSave = (type, expense) => {
-        this.props.afterAdd(expense);
+        if (type == "Add") {
+            this.props.afterAdd(expense);
+        } else {
+            this.props.afterEdit(expense);
+        }
     };
 
-    onDelete = (expenseId) => {
+    edit = (expense) => {
+        this.openExpenseForm("Edit", expense);
+    };
+
+    delete = (expenseId) => {
         this.props.deleteExpense(expenseId);
     }
 }
