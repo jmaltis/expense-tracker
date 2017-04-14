@@ -10,7 +10,7 @@ export default class extends Component {
                 <div className="expensesTitle">
                     <h3>My expenses</h3>
                     <Button bsStyle="primary" onClick={() => this.openExpenseForm("Add")}>Add expense</Button>
-                    <ExpenseForm ref="expenseForm"/>
+                    <ExpenseForm ref="expenseForm" afterSave={this.afterSave}/>
                 </div>
                 <ListGroup>
                     {this.props.expenses.map(expense =>
@@ -23,4 +23,8 @@ export default class extends Component {
     openExpenseForm = (type, expense) => {
         this.refs.expenseForm.open(type, expense);
     };
+
+    afterSave = (type, expense) => {
+        this.props.afterAdd(expense);
+    }
 }

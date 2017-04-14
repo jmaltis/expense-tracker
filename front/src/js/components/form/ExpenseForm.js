@@ -33,8 +33,9 @@ export default class extends Component {
     addExpense = () => {
         const newExpense = u({dateTime: toISOString(this.state.expense.dateTime)}, this.state.expense);
         expensesAPI.create(newExpense)
-            .then(() => {
+            .then(created => {
                 this.close();
+                this.props.afterSave(this.state.type, created);
             })
             .catch(err => {
                 this.displayError(err.message);
