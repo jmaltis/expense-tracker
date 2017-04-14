@@ -6,7 +6,7 @@ export default class extends Component {
         const {userId, amount, datetime, description} = this.props.expense;
         return (
             <div className="expense">
-                <span className="datetime">{datetime}</span>
+                <span className="dateTime">{datetime}</span>
                 <span className="amount">{amount}$</span>
                 <span className="description">{description}</span>
             </div>
