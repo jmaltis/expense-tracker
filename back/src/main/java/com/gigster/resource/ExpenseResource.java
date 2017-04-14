@@ -19,16 +19,20 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import com.gigster.data.Expense;
+import com.gigster.data.exception.RestException;
 import com.gigster.service.ExpenseService;
+import com.gigster.service.ValidationService;
 
 @RestController
 @RequestMapping(value = EXPENSES, produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
 public class ExpenseResource {
 
+    private final ValidationService validationService;
     private final ExpenseService service;
 
     @Autowired
-    public ExpenseResource(ExpenseService service) {
+    public ExpenseResource(ValidationService validationService, ExpenseService service) {
+        this.validationService = validationService;
         this.service = service;
     }
 
@@ -43,14 +47,16 @@ public class ExpenseResource {
     }
 
     @RequestMapping(method = POST)
-    public ResponseEntity create(@Valid @RequestBody Expense entity, BindingResult bindingResult) {
+    public ResponseEntity create(@Valid @RequestBody Expense entity, BindingResult bindingResult) throws RestException {
+        validationService.handleBindingResult(bindingResult);
         return new ResponseEntity<>(service.insert(entity), CREATED);
     }
 
     @RequestMapping(value = ID, method = PATCH)
     public ResponseEntity patch(@PathVariable String id, @Valid @RequestBody Expense entity,
-                    BindingResult bindingResult) {
-        entity.setId(id);
+                    BindingResult bindingResult) throws RestException {
+        validationService.handleBindingResult(bindingResult);
+            entity.setId(id);
         return new ResponseEntity<>(service.update(entity), OK);
     }
 
