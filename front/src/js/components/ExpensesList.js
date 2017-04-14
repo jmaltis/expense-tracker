@@ -14,7 +14,10 @@ export default class extends Component {
                 </div>
                 <ListGroup>
                     {this.props.expenses.map(expense =>
-                        <ListGroupItem key={expense.id}><Expense expense={expense}/></ListGroupItem>)}
+                        <ListGroupItem key={expense.id}>
+                            <Expense expense={expense}
+                                     onDelete={this.onDelete}/>
+                        </ListGroupItem>)}
                 </ListGroup>
             </div>
         )
@@ -26,5 +29,9 @@ export default class extends Component {
 
     afterSave = (type, expense) => {
         this.props.afterAdd(expense);
+    };
+
+    onDelete = (expenseId) => {
+        this.props.deleteExpense(expenseId);
     }
 }

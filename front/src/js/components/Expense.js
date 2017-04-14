@@ -10,7 +10,12 @@ export default class extends Component {
                 <span className="datetime">{toReadableString(dateTime)}</span>
                 <span className="amount">{amount}$</span>
                 <span className="description">{description}</span>
+                <Button className="delete" onClick={() => this.delete()}>Delete</Button>
             </div>
         )
+    }
+
+    delete = () => {
+        this.props.onDelete(this.props.expense.id);
     }
 }

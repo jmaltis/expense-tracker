@@ -32,6 +32,10 @@
 }
 
 /* Expenses */
+.expense {
+    display: flex;
+}
+
 .expense .datetime {
     text-decoration: underline;
     margin-right: 0.5em;
@@ -40,6 +44,10 @@
 .expense .amount {
     font-weight: bold;
     margin-right: 0.5em;
+}
+
+.expense button {
+    margin-left: auto;
 }
 
 .expensesTitle {

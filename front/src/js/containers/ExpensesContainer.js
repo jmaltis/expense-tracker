@@ -33,10 +33,26 @@ export default class extends Component {
         );
     };
 
+    deleteExpense = (expenseId) => {
+        expensesAPI.delete(expenseId)
+            .then(() => {
+                // Update state (remove the deleted entity)
+                this.deleteFromState(expenseId);
+            });
+    };
+
+    deleteFromState = (expenseId) => {
+        this.setState(u({
+                expenses: u.reject((expense) => expense.id == expenseId)
+            }, this.state)
+        );
+    };
+
     render() {
         return (
             <ExpensesList expenses={this.state.expenses}
-                          afterAdd={this.addExpenseToState}/>
+                          afterAdd={this.addExpenseToState}
+                          deleteExpense={this.deleteExpense}/>
         )
     }
 }
